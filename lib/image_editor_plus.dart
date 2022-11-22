@@ -609,12 +609,17 @@ class _SingleImageEditorState extends State<SingleImageEditor> {
                     icon: Icons.edit,
                     text: 'Brush',
                     onTap: () async {
+                      context.loaderOverlay.show();
+
                       var drawing = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ImageEditorDrawing(
-                            image: currentImage.image,
-                          ),
+                          builder: ((context) {
+                            context.loaderOverlay.hide();
+                            return ImageEditorDrawing(
+                              image: currentImage.image,
+                            );
+                          }),
                         ),
                       );
 
@@ -636,10 +641,14 @@ class _SingleImageEditorState extends State<SingleImageEditor> {
                     icon: Icons.text_fields,
                     text: 'Text',
                     onTap: () async {
+                      context.loaderOverlay.show();
                       TextLayerData? layer = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const TextEditorImage(),
+                          builder: ((context) {
+                            context.loaderOverlay.hide();
+                            return const TextEditorImage();
+                          }),
                         ),
                       );
 
@@ -866,6 +875,7 @@ class _SingleImageEditorState extends State<SingleImageEditor> {
                     icon: Icons.photo,
                     text: 'Filter',
                     onTap: () async {
+                      context.loaderOverlay.show();
                       resetTransformation();
 
                       /// Use case: if you don't want to stack your filter, use
@@ -883,9 +893,12 @@ class _SingleImageEditorState extends State<SingleImageEditor> {
                       Uint8List? editedImage = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ImageFilters(
-                            image: data!,
-                          ),
+                          builder: ((context) {
+                            context.loaderOverlay.hide();
+                            return ImageFilters(
+                              image: data!,
+                            );
+                          }),
                         ),
                       );
 
@@ -913,10 +926,13 @@ class _SingleImageEditorState extends State<SingleImageEditor> {
                     icon: FontAwesomeIcons.faceSmile,
                     text: 'Emoji',
                     onTap: () async {
+                      context.loaderOverlay.show();
+
                       EmojiLayerData? layer = await showModalBottomSheet(
                         context: context,
                         backgroundColor: black,
                         builder: (BuildContext context) {
+                          context.loaderOverlay.hide();
                           return const Emojies();
                         },
                       );
