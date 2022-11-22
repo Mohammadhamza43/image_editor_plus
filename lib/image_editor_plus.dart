@@ -592,6 +592,7 @@ class _SingleImageEditorState extends State<SingleImageEditor> {
 
                       Uint8List? img = await Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
+                        context.loaderOverlay.hide();
                         return ImageCropper(image: data!);
                       }));
 
